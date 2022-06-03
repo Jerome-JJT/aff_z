@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jjaqueme <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/03 12:46:56 by jjaqueme          #+#    #+#             */
+/*   Updated: 2022/06/03 12:46:56 by jjaqueme         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -13,12 +25,12 @@
 #include <sys/wait.h>
 #include <sys/time.h>
 
-typedef int  thexa;
+typedef int  hexa;
 
 typedef struct aff_a {
 	int	id;
 	unsigned long	end;
-	thexa	hexa;
+	hexa	hexa;
 }	aff_b;
 
 int	error()
@@ -55,7 +67,6 @@ int	search_a(char *str)
 
 int	main(int argc, char **argv, char **env)
 {
-	setvbuf(stdout, NULL, _IONBF, 0);
 	struct aff_a	*var;
 
 	var = malloc(sizeof(int) * 3 + sizeof(unsigned long));
