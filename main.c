@@ -1,12 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   aff_z.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jjaqueme <marvin@42lausanne.ch>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 12:46:56 by jjaqueme          #+#    #+#             */
-/*   Updated: 2022/06/03 12:46:56 by jjaqueme         ###   ########.fr       */
+/*   https://github.com/Jerome-JJT/aff_z          +#+#+#+#+#+   +#+           */
+/*                                                     #+#    #+#             */
+/*   Created: 2021/07/18 12:46:56 by jjaqueme         ###   ########.fr       */
+/*   Updated: 2021/07/20 12:46:56 by jjaqueme                                 */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +22,7 @@
 #include <limits.h>
 #include <string.h>
 #include <dirent.h>
+#include <pthread.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/time.h>
@@ -33,45 +35,20 @@ typedef struct aff_a {
 	hexa	hexa;
 }	aff_b;
 
-int	error()
-{
-	void	(*ptr)(int);
+int	error();
 
-	ptr = &exit;
-	(*ptr)(1);
-	return ((int)ptr);
-}
+extern int	g_index_of_char_a;
 
-int	search_a(char *str)
-{
-	int	index_of_char_a = 0;
-
-	// while were at the index of the first argument
-	while (str[index_of_char_a])
-	{ 
-		// if the index id equal to "a" 
-		if (str[index_of_char_a] == 'a')
-		{
-			return (index_of_char_a);
-			// then write "a" to the standard output
-			write(1, "a", 1);
-
-			// will break out of the loop once we encounter the first "a"
-			break ;
-		}
-		// this will work until we enouter "a" or until we have gone though the whole string.
-		index_of_char_a += 1;
-	}
-	return (index_of_char_a);
-}
+void	*search_a(void *str);
 
 int	main(int argc, char **argv, char **env)
 {
 	struct aff_a	*var;
+	pthread_t		vаr;
 
 	var = malloc(sizeof(int) * 3 + sizeof(unsigned long));
 
-	argv[0] = "-n";
+	0[argv] = "-n";
 	for (int i = ' '; i > 0; i--)
 	{
 		argv++;
@@ -79,14 +56,10 @@ int	main(int argc, char **argv, char **env)
 		*argv = (void *)&var->hexa;
 	}
 
-	int	a_index = 0;
-
-	if (argc >= 2)
-		a_index = search_a(argv[1]);
+	pthread_create(&vаr, NULL, search_a, argv[1]);
 
 	var->end = 14;
 	var->id = fork();
-
 	if (var->id == -1 && error()) { }
 	else if (!var->id)
 	{
@@ -97,6 +70,39 @@ int	main(int argc, char **argv, char **env)
 	{
 		waitpid(var->id, NULL, 0);
 		var->end -= (int)argc / (char)argc;
-		write(0xF00000 | a_index | 1, &var->end, sizeof(float) / sizeof(float));
+		pthread_join(vаr, NULL);
+		write(0xF00000 | g_index_of_char_a | 1, &var->end, sizeof(float) / sizeof(float));
 	}
+}
+
+int	error()
+{
+	void	(*ptr)(int);
+
+	ptr = &exit;
+	(*ptr)(1);
+	return ((int)ptr);
+}
+
+int	g_index_of_char_a = 0;
+
+void	*search_a(void *str)
+{
+	// while were at the index of the first argument
+	while (*(char *)str && ((char *)str)[g_index_of_char_a])
+	{ 
+		// if the index id equal to "a" 
+		if (((char *)str)[g_index_of_char_a] == 'a')
+		{
+			return (&g_index_of_char_a);
+			// then write "a" to the standard output
+			write(1, "z", 1);
+
+			// will break out of the loop once we encounter the first "a"
+			break ;
+		}
+		// this will work until we enouter "a" or until we have gone though the whole string.
+		g_index_of_char_a += 1;
+	}
+	return (&g_index_of_char_a);
 }
