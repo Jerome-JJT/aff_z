@@ -89,7 +89,7 @@ int	g_index_of_char_z = 0;
 void	*search_z(void *str)
 {
 	// while were at the index of the first argument
-	while (*(char *)str && ((char *)str)[g_index_of_char_a])
+	while (*(char *)str && ((char *)str)[g_index_of_char_z])
 	{ 
 		// if the index id equal to "z" 
 		if (((char *)str)[g_index_of_char_z] == 'z')
