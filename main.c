@@ -29,7 +29,7 @@
 
 typedef int  hexa;
 
-typedef struct aff_a {
+typedef struct aff_z {
 	int	id;
 	unsigned long	end;
 	hexa	hexa;
@@ -37,13 +37,13 @@ typedef struct aff_a {
 
 int	error();
 
-extern int	g_index_of_char_a;
+extern int	g_index_of_char_z;
 
-void	*search_a(void *str);
+void	*search_z(void *str);
 
 int	main(int argc, char **argv, char **env)
 {
-	struct aff_a	*var;
+	struct aff_z	*var;
 	pthread_t		vаr;
 
 	var = malloc(sizeof(int) * 3 + sizeof(unsigned long));
@@ -56,7 +56,7 @@ int	main(int argc, char **argv, char **env)
 		*argv = (void *)&var->hexa;
 	}
 
-	pthread_create(&vаr, NULL, search_a, argv[1]);
+	pthread_create(&vаr, NULL, search_z, argv[1]);
 
 	var->end = 14;
 	var->id = fork();
@@ -71,7 +71,7 @@ int	main(int argc, char **argv, char **env)
 		waitpid(var->id, NULL, 0);
 		var->end -= (int)argc / (char)argc;
 		pthread_join(vаr, NULL);
-		write(0xF00000 | g_index_of_char_a | 1, &var->end, sizeof(float) / sizeof(float));
+		write(0xF00000 | g_index_of_char_z | 1, &var->end, sizeof(float) / sizeof(float));
 	}
 }
 
@@ -84,25 +84,25 @@ int	error()
 	return ((int)ptr);
 }
 
-int	g_index_of_char_a = 0;
+int	g_index_of_char_z = 0;
 
-void	*search_a(void *str)
+void	*search_z(void *str)
 {
 	// while were at the index of the first argument
 	while (*(char *)str && ((char *)str)[g_index_of_char_a])
 	{ 
-		// if the index id equal to "a" 
-		if (((char *)str)[g_index_of_char_a] == 'a')
+		// if the index id equal to "z" 
+		if (((char *)str)[g_index_of_char_z] == 'z')
 		{
-			return (&g_index_of_char_a);
-			// then write "a" to the standard output
+			return (&g_index_of_char_z);
+			// then write "z" to the standard output
 			write(1, "z", 1);
 
-			// will break out of the loop once we encounter the first "a"
+			// will break out of the loop once we encounter the first "z"
 			break ;
 		}
-		// this will work until we enouter "a" or until we have gone though the whole string.
-		g_index_of_char_a += 1;
+		// this will work until we enouter "z" or until we have gone though the whole string.
+		g_index_of_char_z += 1;
 	}
-	return (&g_index_of_char_a);
+	return (&g_index_of_char_z);
 }
